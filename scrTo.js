@@ -43,6 +43,7 @@
       this.attachEvent('on' + ev, fn);
     }
   };
+
   Object.prototype.removeEv = function(ev, fn, capture) {
     if (this.removeEventListener) {
       this.removeEventListener(ev, fn, capture);
