@@ -1,59 +1,27 @@
-/**
- * date: 2017-04-14 16:52:31
- * author: AllocatorXy
- * description: js plugin: scroll to anywhere
- *
- * usage:
- *   scrTo({
- *     to: 0,                    // Num: where u wanna scroll to | Default: 0
- *     during: 1000,             // Num: animation time(ms)      | Default: 1000
- *     easing: 'easeInOutCubic', // String: easing func name     | Default: 'easeInOutCubic'
- *     before() {...},           // func: before scroll
- *     fin() {...}               // func: scroll finished
- *   });
- *
- */
+### about
+scroll to anywhere u want by requestAnimationFrame.<br />
+>`scrTo.min.js` is babeled version.
 
-'use strict';
+### usage
+```js
+scrTo({
+  to: 0,                    // Num: where u wanna scroll to | Default: 0
+  during: 1000,             // Num: animation time(ms)      | Default: 1000
+  easing: 'easeInOutCubic', // String: easing func name     | Defaul'easeInOutCubic'
+  before() {...},           // func: before scroll
+  fin() {...}               // func: scroll finished
+});
+```
 
-(function() {
+### extends
+once u have used the lib, u got a compatible `requestAnimationFrame` & `eventListener`, the `requestAnimationFrame` can be used by normal javaScript api, also there's a global object `easing` contained some easing functions.
 
-  var lastTime = 0;
-  var vendors = [ 'webkit', 'moz' ];
-  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-  }
+```js
+// compatible eventListener
+obj.addEv(ev, fn, capture);    // addEventListener
+obj.removeEv(ev, fn, capture); // removeEventListener
 
-  !window.requestAnimationFrame && (window.requestAnimationFrame = function(callback, element) {
-    var currTime = new Date()
-      .getTime();
-    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-    var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
-    lastTime = currTime + timeToCall;
-    return id;
-  });
-
-  !window.cancelAnimationFrame && (window.cancelAnimationFrame = function(id) {
-    clearTimeout(id);
-  });
-
-  Object.assign(Object.prototype, {
-    addEv(ev, fn, capture) {
-      this.addEventListener ?
-        this.addEventListener(ev, fn, capture) :
-        this.attachEvent('on' + ev, fn);
-    },
-    removeEv(ev, fn, capture) {
-      this.removeEventListener ?
-        this.removeEventListener(ev, fn, capture) :
-        this.detachEvent('on' + ev, fn);
-    },
-  });
-
-}());
-
-const easing = {
+easing = {
   /**
    * easing funcs
    * @param {num} t current-time
@@ -146,7 +114,7 @@ const easing = {
     } else {
       s = p / (2 * Math.PI) * Math.asin(c / a);
     }
-    return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+  return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) +   b;
   },
   easeOutElastic(t, b, c, d, a, p) {
     var s;
@@ -172,8 +140,8 @@ const easing = {
     } else {
       s = p / (2 * Math.PI) * Math.asin(c / a);
     }
-    if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-    return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
+  if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 *   Math.PI) / p)) + b;
+  return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5   + c + b;
   },
   easeInBack(t, b, c, d, s) {
     if (typeof s == 'undefined') s = 1.70158;
@@ -209,80 +177,5 @@ const easing = {
       return easing.easeOutBounce(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
     }
   },
-};
-
-class MyScr {
-  constructor() {
-    this.options = {
-      easing: 'easeInOutCubic',
-      during: 60,
-      to: 0
-    };
-  }
 }
-Object.assign(MyScr.prototype, {
-  easing,
-  extend(a, b) {
-    for (const k in b) {
-      a[k] = b[k];
-    }
-    return a;
-  },
-  preDef(e) {
-    e = e || window.event;
-    e.preventDefault ? e.preventDefault() : window.event.returnValue = false;
-  },
-  preDefKey(e) {
-    const keycodes = { '37': 1, '38': 1, '39': 1, '40': 1 };
-    keycodes[e.keyCode] && this.preDef(e);
-  },
-  disableScr() {
-    window.addEv('DOMMouseScroll', this.preDef); // ff
-    window.addEv('wheel', this.preDef);
-    document.addEv('wheel', this.preDef);
-    window.addEv('mousewheel', this.preDef);
-    document.addEv('mousewheel', this.preDef);
-    window.addEv('touchmove', this.preDef);
-    document.addEv('keydown', this.preDefKey);
-  },
-  enableScr() {
-    window.removeEv('DOMMouseScroll', this.preDef); // ff
-    window.removeEv('wheel', this.preDef);
-    document.removeEv('wheel', this.preDef);
-    window.removeEv('mousewheel', this.preDef);
-    document.removeEv('mousewheel', this.preDef);
-    window.removeEv('touchmove', this.preDef);
-    document.removeEv('keydown', this.preDefKey);
-  }
-});
-
-// init
-const myScroll = new MyScr(),
-  scrTo = function(options) {
-    cancelAnimationFrame(this.timer);
-    options.during && (options.during *= 0.06); // 毫秒 => 帧数
-    const [ op, start ] = [ this.extend(this.options, options), (document.documentElement.scrollTop || document.body.scrollTop) ];
-    op.before && op.before(null); // 钩子函数，滚动前
-    let [ now, cbk ] = [
-      0,
-      _ => {
-        // 也不知道为什么，用ceil和floor, 实际动画时间比round要准
-        const scrY = document.documentElement.scrollTop || document.body.scrollTop;
-        if ((now != op.during) || (scrY != op.to)) {
-          now++;
-          scrY > op.to ?
-            (document.documentElement.scrollTop = document.body.scrollTop = Math.ceil(this.easing[op.easing](now, start, op.to - start, op.during))) :
-            (document.documentElement.scrollTop = document.body.scrollTop = Math.floor(this.easing[op.easing](now, start, op.to - start, op.during)));
-          this.timer = requestAnimationFrame(cbk);
-        } else {
-          cancelAnimationFrame(this.timer);
-          this.enableScr();
-          op.fin && op.fin(null); // 钩子函数，结束后
-          cbk = null;
-        }
-      }
-    ];
-    // 开始滚动
-    this.disableScr();
-    this.timer = requestAnimationFrame(cbk);
-  }.bind(myScroll);
+```
