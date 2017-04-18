@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8" />
+  <title>demo</title>
+</head>
+
+<body>
+  <ul>
+    <li><a href="javascript:;" id="toBottom">toBottom</a></li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>qqq</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li>1</li>
+    <li><a href="javascript:;" id="toTop">toTop</a></li>
+  </ul>
+</body>
+<script src="../dist/scrTo.min.js"></script>
+<!-- <script src="../src/scrTo.js"></script> -->
+<script type="text/javascript">
+  window.onload = function() {
+
+    a1 = document.querySelector('#toBottom');
+    a2 = document.querySelector('#toTop');
+
+    a1.addEv('click', function() {
+      scrTo({
+        to: a2.offsetTop,
+        during: 2000,
+        easing: 'easeInBounce',
+        before() {
+          alert('will scroll to bottom');
+        }
+      });
+    });
+
+    a2.addEv('click', function() {
+      scrTo({
+        fin() {
+          alert('now is top');
+        }
+      });
+    });
+
+  };
+</script>
+
+</html>
