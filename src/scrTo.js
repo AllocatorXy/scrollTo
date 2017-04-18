@@ -38,18 +38,16 @@
     clearTimeout(id);
   });
 
-  Object.assign(Object.prototype, {
-    addEv(ev, fn, capture) {
-      this.addEventListener ?
-        this.addEventListener(ev, fn, capture) :
-        this.attachEvent('on' + ev, fn);
-    },
-    removeEv(ev, fn, capture) {
-      this.removeEventListener ?
-        this.removeEventListener(ev, fn, capture) :
-        this.detachEvent('on' + ev, fn);
-    },
-  });
+  Object.prototype.addEv = function(ev, fn, capture) {
+    this.addEventListener ?
+      this.addEventListener(ev, fn, capture) :
+      this.attachEvent('on' + ev, fn);
+  };
+  Object.prototype.removeEv = function(ev, fn, capture) {
+    this.removeEventListener ?
+      this.removeEventListener(ev, fn, capture) :
+      this.detachEvent('on' + ev, fn);
+  };
 
 }());
 
