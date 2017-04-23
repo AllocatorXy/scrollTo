@@ -14,13 +14,22 @@ scrTo({
 ```
 
 ### extends
-once u have used the lib, u got a compatible `requestAnimationFrame` & `eventListener`, the `requestAnimationFrame` can be used by normal javaScript api, also there's a global object `easing` contained some easing functions.
+once u have used the lib, u got four compatible APIs: <br />
+1. `requestAnimationFrame`;
+2. `bind function`;
+3. `eventListener`;
+4. global object contains `easing` functions;
+
+>Among them, `requestAnimationFrame` & `bind function` can be used by normal js api;
 
 ```js
-// compatible eventListener
+// eventListener api
 obj.addEv(ev, fn, capture);    // addEventListener
 obj.removeEv(ev, fn, capture); // removeEventListener
 
+/**
+ 
+ */
 easing = {
   /**
    * easing funcs
@@ -28,6 +37,10 @@ easing = {
    * @param {num} b start-val
    * @param {num} c delta-val
    * @param {num} d during
+   * 
+   * example:
+   *   easing.Linear(0, 0, 100, 60)
+   *
    */
   Linear(t, b, c, d) {
     return c * t / d + b;
