@@ -3,10 +3,13 @@
     [
       "env", {
         "targets": {
-          "browsers": ["last 10 versions", "safari >= 7"]
+          "browsers": ["last 20 versions", "safari >= 7"]
         }
       }
     ]
   ],
-  "plugins": ["transform-object-assign"]
+  "plugins": [
+    "transform-object-assign",
+    "transform-function-bind"
+  ]
 }
