@@ -253,9 +253,9 @@ const myScroll = new MyScr(),
   scrTo = function(options) {
     cancelAnimationFrame(this.timer);
     (options && options.during) && (options.during *= 0.06); // 毫秒 => 帧数
-    const [ op, start ] = [ Object.assign(this.options, options), (document.documentElement.scrollTop || document.body.scrollTop) ];
+    const [ op, start ] = [ Object.assign({}, this.options, options), (document.documentElement.scrollTop || document.body.scrollTop) ];
     op.before && op.before(null); // 钩子函数，滚动前
-    let [ now, cbk ] = [
+    let [ now, step ] = [
       0,
       _ => {
         // 也不知道为什么，用ceil和floor, 实际动画时间比round要准
@@ -265,21 +265,16 @@ const myScroll = new MyScr(),
           scrY > op.to ?
             (document.documentElement.scrollTop = document.body.scrollTop = Math.ceil(this.easing[op.easing](now, start, op.to - start, op.during))) :
             (document.documentElement.scrollTop = document.body.scrollTop = Math.floor(this.easing[op.easing](now, start, op.to - start, op.during)));
-          this.timer = requestAnimationFrame(cbk);
+          this.timer = requestAnimationFrame(step);
         } else {
           cancelAnimationFrame(this.timer);
           this.enableScr();
           op.fin && op.fin(null); // 钩子函数，结束后
-          this.options = { // 恢复默认设置
-            easing: 'easeInOutCubic',
-            during: 60,
-            to: 0
-          };
-          cbk = null;
+          step = null;
         }
       }
     ];
     // 开始滚动
     this.disableScr();
-    this.timer = requestAnimationFrame(cbk);
+    this.timer = requestAnimationFrame(step);
   }.bind(myScroll);

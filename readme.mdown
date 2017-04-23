@@ -1,6 +1,6 @@
 ### about
 scroll to anywhere u want by requestAnimationFrame.<br />
->`scrTo.min.js` is babeled version.
+>`/dist` is babeled version.
 
 ### usage
 ```js
