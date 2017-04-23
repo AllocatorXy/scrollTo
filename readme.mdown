@@ -27,9 +27,6 @@ once u have used the lib, u got four compatible APIs: <br />
 obj.addEv(ev, fn, capture);    // addEventListener
 obj.removeEv(ev, fn, capture); // removeEventListener
 
-/**
- 
- */
 easing = {
   /**
    * easing funcs
